@@ -3,16 +3,16 @@ Knowledge graph schema for data described by RDDC sidecars.
 
 The graph has three layers:
 
-- structural: Source -> Batch -> FileSet -> DataFile, as declared in the sidecar
+- structural: Contributor -> Batch -> FileSet -> DataFile, as declared in the sidecar
 - instance: subjects (biolink:Case) and their phenotypes, diagnoses, variants and
   medications, which are access-controlled
 - semantic: ontology concepts that files and subjects link to, with their hierarchy
   and mappings across vocabularies
 """
 
-## RDDC sidecar class -> Biolink category. The RDDC class is kept in `raw_label`.
+## RDDC sidecar element -> Biolink category. The RDDC class is kept in `raw_label`.
 RDDC_CLASS_TO_BIOLINK = {
-    "Source": "biolink:Agent",
+    "Contributor": "biolink:Agent",
     "Batch": "biolink:DatasetVersion",
     "FileSet": "biolink:Dataset",
     "DataFile": "biolink:DatasetDistribution",
@@ -53,9 +53,13 @@ PREFERRED_PREFIXES = {
 STRUCTURAL_EDGES = [
     ("biolink:DatasetVersion", "biolink:has_contributor", "biolink:Agent", None),
     ("biolink:DatasetVersion", "biolink:has_member", "biolink:Dataset", None),
+    ("biolink:DatasetVersion", "biolink:has_member",
+     "biolink:DatasetDistribution", None),
     ("biolink:Dataset", "biolink:has_member", "biolink:DatasetDistribution", None),
+    ("biolink:Dataset", "biolink:derives_from", "biolink:Dataset", None),
     ("biolink:DatasetDistribution", "biolink:derives_from",
      "biolink:DatasetDistribution", None),
+    ("biolink:DatasetVersion", "biolink:mentions", "biolink:Case", None),
     ("biolink:DatasetDistribution", "biolink:mentions", "biolink:Case", None),
 ]
 
@@ -112,8 +116,11 @@ NODE_ATTRIBUTES = [
     "xref:string[]",
     "grounded:boolean",
     "source:string[]",
-    ## "controlled" for subjects and any node a sidecar marks sensitive
+    ## "controlled" for anything deposited, "open" for ontology concepts
     "access",
+    "conforms_to:string[]",
+    "encoding_format",
+    "id_system:string[]",
 ]
 
 EDGE_ATTRIBUTES = [
