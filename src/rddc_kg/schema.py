@@ -39,11 +39,11 @@ CONCEPT_CATEGORIES = [
 ## Bioregistry prefixes per category, most preferred first. A concept is identified
 ## by the first prefix it has an identifier in, other identifiers go in `xref`.
 PREFERRED_PREFIXES = {
-    "biolink:Disease": ["mondo", "orphanet", "omim", "doid", "mesh"],
+    "biolink:Disease": ["mondo", "orpha", "omim", "doid", "mesh"],
     "biolink:PhenotypicFeature": ["hp"],
     "biolink:Gene": ["hgnc", "ncbigene", "ensembl"],
     "biolink:Protein": ["uniprot"],
-    "biolink:SequenceVariant": ["clinvar", "dbsnp"],
+    "biolink:SequenceVariant": ["clinvar.variation", "dbsnp"],
     "biolink:Drug": ["rxnorm", "chebi", "chembl.compound", "drugbank"],
     "biolink:SmallMolecule": ["chebi", "chembl.compound", "drugbank", "mesh"],
 }
