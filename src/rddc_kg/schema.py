@@ -137,8 +137,6 @@ EDGE_ATTRIBUTES = [
     "score:float",
     "raw_texts:string[]",
     "columns:string[]",
-    ## Ontology releases used, e.g. mondo:2025-03-04
-    "vocabulary_version:string[]",
     "negated:boolean",
     "onset",
     "zygosity",
