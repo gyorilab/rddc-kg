@@ -131,7 +131,8 @@ EDGE_ATTRIBUTES = [
     "category",
     "source:string[]",
     "file_id:string[]",
-    ## How the edge was made: sidecar, coded_field, harmonization_mapping, gilda or llm
+    ## How the edge was made: sidecar, source_identifier,
+    ## harmonization_mapping, gilda or llm
     "method",
     "score:float",
     "raw_texts:string[]",
