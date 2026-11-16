@@ -61,8 +61,9 @@ def add_sidecar(sidecar: dict, node_set: NodeSet, edge_set: EdgeSet) -> str:
                 ":END_ID": obj,
                 ":TYPE": pred,
                 "raw_type": raw_type,
-                "source:string[]": batch,
-                "method": "sidecar",
+                "primary_knowledge_source": batch,
+                "knowledge_level": "observation",
+                "agent_type": "not_provided",
                 "access": "controlled",
             }
         )

@@ -129,14 +129,22 @@ EDGE_ATTRIBUTES = [
     ":TYPE",
     "raw_type",
     "category",
-    "source:string[]",
-    "file_id:string[]",
-    ## How the edge was made: sidecar, source_identifier,
-    ## harmonization_mapping, gilda or llm
+    ## Biolink provenance, on every edge
+    "primary_knowledge_source",
+    "knowledge_level",
+    "agent_type",
+    ## Instance and mentions edges, one edge per supporting record
+    "file_id",
+    ## Table column and row, OMOP table and record id, or text offsets
+    "location",
+    "raw_text",
+    ## source_identifier, harmonization_mapping, gilda or llm
     "method",
     "score:float",
-    "raw_texts:string[]",
-    "columns:string[]",
+    ## subclass_of and mapping edges
+    "source_version",
+    ## SSSOM mapping justification, e.g. semapv:LexicalMatching
+    "mapping_justification",
     "negated:boolean",
     "onset",
     "zygosity",
