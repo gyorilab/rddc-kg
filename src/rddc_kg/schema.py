@@ -1,15 +1,16 @@
 """
 Knowledge graph schema for data described by RDDC sidecars.
 
-The graph has three layers:
+The graph has four layers:
 
-- structural: Contributor -> Batch -> FileSet -> DataFile, as declared in the sidecar
-- instance: subjects (biolink:Case) and their phenotypes, diagnoses, variants and
-  medications, which are access-controlled
-- semantic: ontology concepts that files and subjects link to, with their hierarchy
-  and mappings across vocabularies
-
-Edges from external knowledge bases are typed separately in EXTERNAL_EDGES.
+- structural: contributors, batches, file sets, files and the subjects
+  (biolink:Case) they list, as declared in the sidecar
+- instance: each subject's phenotypes, diagnoses, variants and medications,
+  which are access-controlled
+- semantic: ontology concepts that files and subjects link to, with their
+  hierarchy and mappings across vocabularies
+- external: edges from external knowledge bases, typed in EXTERNAL_EDGES and
+  not included in ALLOWED_TRIPLES
 """
 
 ## RDDC sidecar element -> Biolink category. The RDDC class is kept in `raw_label`.
