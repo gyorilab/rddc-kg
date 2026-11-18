@@ -8,6 +8,8 @@ The graph has three layers:
   medications, which are access-controlled
 - semantic: ontology concepts that files and subjects link to, with their hierarchy
   and mappings across vocabularies
+
+Edges from external knowledge bases are typed separately in EXTERNAL_EDGES.
 """
 
 ## RDDC sidecar element -> Biolink category. The RDDC class is kept in `raw_label`.
@@ -33,6 +35,7 @@ CONCEPT_CATEGORIES = [
     "biolink:OrganismTaxon",
     "biolink:RNAProduct",
     "biolink:MacromolecularComplex",
+    "biolink:Pathway",
     "biolink:NamedThing",
 ]
 
@@ -46,6 +49,7 @@ PREFERRED_PREFIXES = {
     "biolink:SequenceVariant": ["clinvar.variation", "dbsnp"],
     "biolink:Drug": ["rxnorm", "chebi", "chembl.compound", "drugbank"],
     "biolink:SmallMolecule": ["chebi", "chembl.compound", "drugbank", "mesh"],
+    "biolink:Pathway": ["wikipathways", "reactome"],
 }
 
 ## (subject category, predicate, object category, Biolink association) for each
@@ -97,6 +101,17 @@ MAPPING_PREDICATES = [
     "biolink:narrow_match",
 ]
 
+## Edges from external knowledge bases, which are either stored in the graph or
+## queried in the knowledge base's own graph. raw_type stores the knowledge
+## base's own relation, for example an INDRA statement type.
+EXTERNAL_EDGES = [
+    ("biolink:Gene", "biolink:regulates", "biolink:Gene", None),
+    ("biolink:Gene", "biolink:actively_involved_in", "biolink:Pathway", None),
+    ("biolink:SmallMolecule", "biolink:affects", "biolink:Gene", None),
+    ("biolink:SmallMolecule", "biolink:in_clinical_trials_for",
+     "biolink:Disease", None),
+]
+
 SEMANTIC_EDGES = (
     [("biolink:DatasetDistribution", "biolink:mentions", c, None)
      for c in CONCEPT_CATEGORIES]
@@ -106,6 +121,7 @@ SEMANTIC_EDGES = (
 
 EDGES = STRUCTURAL_EDGES + INSTANCE_EDGES + SEMANTIC_EDGES
 ALLOWED_TRIPLES = {(s, p, o) for s, p, o, _ in EDGES}
+EXTERNAL_TRIPLES = {(s, p, o) for s, p, o, _ in EXTERNAL_EDGES}
 
 NODE_ATTRIBUTES = [
     "curie:ID",
