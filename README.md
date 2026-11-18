@@ -47,3 +47,7 @@ print(validate_graph(nodes, edges, ALLOWED_TRIPLES))
 nodes.write_node_set("nodes.tsv")
 edges.write_edge_set("edges.tsv")
 ```
+
+## Funding
+
+This research was, in part, funded by the Advanced Research Projects Agency for Health (ARPA-H). The views and conclusions contained in this document are those of the authors and should not be interpreted as representing the official policies, either expressed or implied, of the United States Government.
