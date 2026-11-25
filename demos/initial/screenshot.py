@@ -36,7 +36,7 @@ with sync_playwright() as p:
                             device_scale_factor=2)
     page.goto(URL)
     page.wait_for_timeout(4000)
-    ## Authentication is disabled, so any password is accepted
+    # Authentication is disabled, so any password is accepted
     modal = page.locator(".ndl-modal-root")
     modal.locator("input[type=password]").fill("none")
     modal.get_by_role("button", name="Connect").click()
@@ -58,7 +58,7 @@ with sync_playwright() as p:
         page.get_by_label(f"select-size-{size}px").click()
         page.keyboard.press("Escape")
         page.wait_for_timeout(200)
-    ## Color the edge types from external knowledge bases
+    # Color the edge types from external knowledge bases
     for rel_type in EXTERNAL_TYPES:
         chip = page.locator(f"button[title='{rel_type}']")
         if not chip.count():
@@ -70,7 +70,7 @@ with sync_playwright() as p:
         page.keyboard.press("Escape")
         page.wait_for_timeout(200)
     page.get_by_role("button", name="Toggle graph details panel").click()
-    ## The button before the frame's Run button makes the frame fullscreen
+    # The button before the frame's Run button makes the frame fullscreen
     page.get_by_role("button", name="Run").nth(1).locator(
         "xpath=preceding-sibling::button[1]").click()
     page.wait_for_timeout(1500)

@@ -19,8 +19,8 @@ MATCH (o:`biolink:Dataset`)-[:`biolink:derives_from`]->(f:`biolink:Dataset`)
 MATCH (f)-[:`biolink:has_member`]->(file)
 RETURN o.name AS derived, f.name AS source,
        collect(file.name) AS source_files""",
-    ## Drugs in trials for another subject's diagnosis that inhibit a gene
-    ## that P0002's variant gene regulates, with the path's INDRA belief
+    # Drugs in trials for another subject's diagnosis that inhibit a gene
+    # that P0002's variant gene regulates, with the path's INDRA belief
     "Drugs linked to P0002 through external knowledge": """
 MATCH (s:`biolink:Case` {name: 'P0002'})
       -[:`biolink:associated_with` {raw_type: 'variant'}]->(g:`biolink:Gene`)

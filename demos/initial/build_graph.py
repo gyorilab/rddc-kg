@@ -21,8 +21,8 @@ from rddc_kg.schema import (ALLOWED_TRIPLES, EDGE_ATTRIBUTES,
                             EXTERNAL_TRIPLES, NODE_ATTRIBUTES)
 from rddc_kg.sidecar import add_sidecar, load_sidecar, subject_curie
 
-## Synthetic clinical records added for the subjects in the sidecars, which
-## contain none: (subject, predicate, concept, raw_type)
+# Synthetic clinical records added for the subjects in the sidecars, which
+# contain none: (subject, predicate, concept, raw_type)
 RECORDS = [
     ("P0001", "biolink:associated_with", "mondo:0018975", "diagnosis"),
     ("P0001", "biolink:has_phenotype", "hp:0001250", None),
@@ -47,9 +47,9 @@ CATEGORIES = {
     "chebi": "biolink:SmallMolecule",
     "wikipathways": "biolink:Pathway",
 }
-## WikiPathways Ras signaling
+# WikiPathways Ras signaling
 PATHWAY = "wikipathways:WP4223"
-## Sources of curated drug-target statements in INDRA
+# Sources of curated drug-target statements in INDRA
 TARGET_SOURCES = ["tas", "drugbank", "chembl"]
 
 MEMBERS = """
@@ -60,7 +60,7 @@ MATCH (d)-[r:indra_rel {stmt_type: 'Inhibition'}]->(t:BioEntity)
 WHERE t.id STARTS WITH 'hgnc:'
   AND any(s IN $sources WHERE r.source_counts CONTAINS ('"' + s + '"'))
 RETURN d.id, m.id, i.version, t.id, max(r.belief)"""
-## The statement type with the most evidence for each pair of genes
+# The statement type with the most evidence for each pair of genes
 REGULATION = """
 MATCH (a:BioEntity)-[r:indra_rel]->(b:BioEntity)
 WHERE a.id IN $genes AND b.id IN $genes AND a <> b
@@ -90,13 +90,13 @@ def add_edge(subj, pred, obj, source, level, agent, **attrs):
 
 
 for subject, pred, concept, raw_type in RECORDS:
-    ## The source marks the edge as added for this demo, not from a batch
+    # The source marks the edge as added for this demo, not from a batch
     add_edge(subject_curie(source, subject), pred, concept,
              "rddc:example", "observation", "manual_agent",
              category=ASSOCIATIONS[concept.split(":")[0]],
              raw_type=raw_type or "", access="controlled")
 
-## MeSH equivalents of the diagnoses, for drug indications from ChEMBL
+# MeSH equivalents of the diagnoses, for drug indications from ChEMBL
 diagnoses = {c for _, _, c, t in RECORDS if t == "diagnosis"}
 mesh = set()
 for m in get_mondo_mappings():
@@ -108,7 +108,7 @@ for m in get_mondo_mappings():
                  source_version=OBO_RELEASES["mondo"],
                  mapping_justification="semapv:ManualMappingCuration")
 
-## Direct is_a relations between the phenotypes in the graph
+# Direct is_a relations between the phenotypes in the graph
 hp = obonet.read_obo(get_obo_path("hp"))
 phenotypes = {c for *_, c, _ in RECORDS if c.startswith("hp:")}
 for child in phenotypes:
@@ -140,7 +140,7 @@ for gene in genes & members:
     add_edge(gene, "biolink:actively_involved_in", PATHWAY,
              "infores:wikipathways", "knowledge_assertion", "manual_agent")
 
-## Concept nodes for every edge end that is not yet in the graph
+# Concept nodes for every edge end that is not yet in the graph
 concepts = {e[k] for e in edges.edges.values()
             for k in (":START_ID", ":END_ID")}
 concepts -= set(nodes.nodes)

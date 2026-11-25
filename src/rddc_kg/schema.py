@@ -13,7 +13,7 @@ The graph has four layers:
   not included in ALLOWED_TRIPLES
 """
 
-## RDDC sidecar element -> Biolink category. The RDDC class is kept in `raw_label`.
+# RDDC sidecar element -> Biolink category. The RDDC class is kept in `raw_label`.
 RDDC_CLASS_TO_BIOLINK = {
     "Contributor": "biolink:Agent",
     "Batch": "biolink:DatasetVersion",
@@ -40,8 +40,8 @@ CONCEPT_CATEGORIES = [
     "biolink:NamedThing",
 ]
 
-## Bioregistry prefixes per category, most preferred first. A concept is identified
-## by the first prefix it has an identifier in, other identifiers go in `xref`.
+# Bioregistry prefixes per category, most preferred first. A concept is identified
+# by the first prefix it has an identifier in, other identifiers go in `xref`.
 PREFERRED_PREFIXES = {
     "biolink:Disease": ["mondo", "orpha", "omim", "doid", "mesh"],
     "biolink:PhenotypicFeature": ["hp"],
@@ -53,8 +53,8 @@ PREFERRED_PREFIXES = {
     "biolink:Pathway": ["wikipathways", "reactome"],
 }
 
-## (subject category, predicate, object category, Biolink association) for each
-## allowed edge
+# (subject category, predicate, object category, Biolink association) for each
+# allowed edge
 STRUCTURAL_EDGES = [
     ("biolink:DatasetVersion", "biolink:has_contributor", "biolink:Agent", None),
     ("biolink:DatasetVersion", "biolink:has_member", "biolink:Dataset", None),
@@ -68,8 +68,8 @@ STRUCTURAL_EDGES = [
     ("biolink:DatasetDistribution", "biolink:mentions", "biolink:Case", None),
 ]
 
-## raw_type distinguishes edges that share a generic predicate, e.g. a confirmed
-## diagnosis, a candidate diagnosis and a family history of a disease
+# raw_type distinguishes edges that share a generic predicate, e.g. a confirmed
+# diagnosis, a candidate diagnosis and a family history of a disease
 INSTANCE_EDGES = [
     ("biolink:Case", "biolink:has_phenotype", "biolink:PhenotypicFeature",
      "biolink:CaseToPhenotypicFeatureAssociation"),
@@ -85,7 +85,7 @@ INSTANCE_EDGES = [
      "biolink:VariantToGeneAssociation"),
 ]
 
-## Categories whose vocabularies have a hierarchy (MONDO, HPO, ChEBI, GO, Uberon)
+# Categories whose vocabularies have a hierarchy (MONDO, HPO, ChEBI, GO, Uberon)
 HIERARCHY_CATEGORIES = [
     "biolink:Disease",
     "biolink:PhenotypicFeature",
@@ -102,9 +102,9 @@ MAPPING_PREDICATES = [
     "biolink:narrow_match",
 ]
 
-## Edges from external knowledge bases, which are either stored in the graph or
-## queried in the knowledge base's own graph. raw_type stores the knowledge
-## base's own relation, for example an INDRA statement type.
+# Edges from external knowledge bases, which are either stored in the graph or
+# queried in the knowledge base's own graph. raw_type stores the knowledge
+# base's own relation, for example an INDRA statement type.
 EXTERNAL_EDGES = [
     ("biolink:Gene", "biolink:regulates", "biolink:Gene", None),
     ("biolink:Gene", "biolink:actively_involved_in", "biolink:Pathway", None),
@@ -133,7 +133,7 @@ NODE_ATTRIBUTES = [
     "xref:string[]",
     "grounded:boolean",
     "source:string[]",
-    ## "controlled" for anything deposited, "open" for ontology concepts
+    # "controlled" for anything deposited, "open" for ontology concepts
     "access",
     "conforms_to:string[]",
     "encoding_format",
@@ -146,21 +146,21 @@ EDGE_ATTRIBUTES = [
     ":TYPE",
     "raw_type",
     "category",
-    ## Biolink provenance, on every edge
+    # Biolink provenance, on every edge
     "primary_knowledge_source",
     "knowledge_level",
     "agent_type",
-    ## Instance and mentions edges, one edge per supporting record
+    # Instance and mentions edges, one edge per supporting record
     "file_id",
-    ## Table column and row, OMOP table and record id, or text offsets
+    # Table column and row, OMOP table and record id, or text offsets
     "location",
     "raw_text",
-    ## source_identifier, harmonization_mapping, gilda or llm
+    # source_identifier, harmonization_mapping, gilda or llm
     "method",
     "score:float",
-    ## subclass_of and mapping edges
+    # subclass_of and mapping edges
     "source_version",
-    ## SSSOM mapping justification, e.g. semapv:LexicalMatching
+    # SSSOM mapping justification, e.g. semapv:LexicalMatching
     "mapping_justification",
     "negated:boolean",
     "onset",

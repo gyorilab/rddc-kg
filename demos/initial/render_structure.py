@@ -14,7 +14,7 @@ from dglink import EdgeSet, NodeSet
 from rddc_kg.schema import EDGE_ATTRIBUTES, NODE_ATTRIBUTES
 from rddc_kg.sidecar import add_sidecar, load_sidecar
 
-## One row per category, from the contributor at the top to the subjects
+# One row per category, from the contributor at the top to the subjects
 COLORS = {
     "biolink:Agent": "#e7f1fb",
     "biolink:DatasetVersion": "#efedff",
@@ -35,7 +35,7 @@ g.attr("node", shape="box", style="rounded,filled", fontname="Helvetica",
        fontsize="10", margin="0.06,0.01", color="#888888")
 g.attr("edge", fontname="Helvetica", fontsize="8", color="#888888",
        fontcolor="#555555")
-## Graphviz reads a colon in a node id as a port separator
+# Graphviz reads a colon in a node id as a port separator
 ids = {curie: f"n{i}" for i, curie in enumerate(nodes.nodes)}
 for curie, node in nodes.nodes.items():
     category = node[":LABEL"]
@@ -56,7 +56,7 @@ for edge in edges.edges.values():
         label = ""
     rows = [order.index(nodes.nodes[c][":LABEL"])
             for c in (edge[":START_ID"], edge[":END_ID"])]
-    ## Upward edges are laid out reversed, edges within a row are ignored
+    # Upward edges are laid out reversed, edges within a row are ignored
     if rows[0] > rows[1]:
         g.edge(end, start, label, dir="back")
     else:

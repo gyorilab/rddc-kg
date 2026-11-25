@@ -7,7 +7,7 @@ from dglink import EdgeSet, NodeSet
 
 from rddc_kg.schema import RDDC_CLASS_TO_BIOLINK
 
-## Placeholder prefix until RDDC identifiers are registered in Bioregistry
+# Placeholder prefix until RDDC identifiers are registered in Bioregistry
 PREFIX = "rddc"
 
 
@@ -21,12 +21,13 @@ def _refs(value) -> list:
     return [ref["@id"] for ref in _as_list(value)]
 
 
-def _item_id(item: dict, source_id: str, batch_id: str) -> str:
+def item_id(item: dict, source_id: str, batch_id: str) -> str:
+    """Return the node id of a file or file set in a sidecar's distribution."""
     kind = "fileset" if item["@type"] == "cr:FileSet" else "file"
     local = item["@id"]
     if local.startswith("urn:uuid:"):
         return f"{PREFIX}:{kind}/{local.removeprefix('urn:uuid:')}"
-    ## Local ids are only unique within one sidecar
+    # Local ids are only unique within one sidecar
     return f"{PREFIX}:{kind}/{source_id}/{batch_id}/{local}"
 
 
@@ -80,7 +81,7 @@ def add_sidecar(sidecar: dict, node_set: NodeSet, edge_set: EdgeSet) -> str:
         add_edge(batch, "biolink:mentions", case, "subjects")
 
     items = sidecar.get("distribution", [])
-    ids = {item["@id"]: _item_id(item, source_id, batch_id) for item in items}
+    ids = {item["@id"]: item_id(item, source_id, batch_id) for item in items}
     file_sets = [item for item in items if item["@type"] == "cr:FileSet"]
     files = [item for item in items if item["@type"] == "cr:FileObject"]
 
@@ -101,7 +102,7 @@ def add_sidecar(sidecar: dict, node_set: NodeSet, edge_set: EdgeSet) -> str:
             add_edge(ids[item["@id"]], "biolink:mentions",
                      subject_curie(source_id, subject_id), "subjectIds")
 
-    ## A file set lists its files in hasPart, or selects them with includes globs
+    # A file set lists its files in hasPart, or selects them with includes globs
     in_set = set()
     for file_set in file_sets:
         members = set(_refs(file_set.get("hasPart")))

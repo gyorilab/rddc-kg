@@ -4,13 +4,13 @@ import gilda
 import pystow
 from gilda.generate_terms import terms_from_obo_url
 
-## Pinned ontology releases, loaded from their OBO files
+# Pinned ontology releases, loaded from their OBO files
 OBO_RELEASES = {
     "mondo": "2026-11-03",
     "hp": "2026-09-01",
 }
 
-## Namespaces taken from Gilda's built-in terms, versioned by the Gilda release
+# Namespaces taken from Gilda's built-in terms, versioned by the Gilda release
 GILDA_NAMESPACES = {"HGNC", "CHEBI", "GO"}
 
 
@@ -36,7 +36,7 @@ def make_grounder() -> gilda.Grounder:
         if term.db in GILDA_NAMESPACES
     ]
     for prefix in OBO_RELEASES:
-        ## Keep source identifiers instead of remapping them to MeSH or DOID
+        # Keep source identifiers instead of remapping them to MeSH or DOID
         terms += terms_from_obo_url(
             get_obo_path(prefix), prefix, ignore_mappings=True,
             map_to_ns=set()

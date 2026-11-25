@@ -6,8 +6,8 @@ from dglink.core.mappings import read_obo_mappings
 
 from rddc_kg.grounder import get_obo_path
 
-## MONDO's cross-reference qualifiers. "MONDO is narrower than the source" means
-## the source term is broader, so MONDO broad_match source.
+# MONDO's cross-reference qualifiers. "MONDO is narrower than the source" means
+# the source term is broader, so MONDO broad_match source.
 MONDO_QUALIFIER_PREDICATES = {
     "MONDO:equivalentTo": "biolink:exact_match",
     "MONDO:mondoIsNarrowerThanSource": "biolink:broad_match",

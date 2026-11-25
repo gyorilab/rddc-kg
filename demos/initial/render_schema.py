@@ -25,7 +25,7 @@ COLORS = {
 ROWS = [["Agent", "DatasetVersion", "Dataset", "DatasetDistribution"],
         ["SmallMolecule", "Case"],
         ["Pathway", "Gene", "Disease", "PhenotypicFeature"]]
-## Self-loops above or below their node, away from the edges in its row
+# Self-loops above or below their node, away from the edges in its row
 LOOP_PORTS = {"Dataset": "n", "Gene": "s", "Disease": "s",
               "PhenotypicFeature": "s"}
 ONTOLOGY_PREDICATES = {"biolink:subclass_of", *MAPPING_PREDICATES}
@@ -52,7 +52,7 @@ for row in ROWS:
         s.attr(rank="same")
         for label in row:
             s.node(label, fillcolor=COLORS[label])
-        ## Invisible edges keep the nodes of a row in order
+        # Invisible edges keep the nodes of a row in order
         for a, b in zip(row, row[1:]):
             s.edge(a, b, style="invis")
 for s, p, o in triples:
@@ -62,7 +62,7 @@ for s, p, o in triples:
         kind = "ontology"
     else:
         kind = "rddc"
-    ## Graphviz reads a colon in a node id as a port separator
+    # Graphviz reads a colon in a node id as a port separator
     s, o = s.removeprefix("biolink:"), o.removeprefix("biolink:")
     ports = {}
     if s == o and s in LOOP_PORTS:
